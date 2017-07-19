@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+    <appender name="suixin" class="LoggerAppenderRollingFile">
+        <layout class="LoggerLayoutTTCC"/>
+        <param name="file" value="U:/testSolrCon/logs/suixin/suixin.log"/>
+        <param name="maxBackupIndex" value="100"/>
+    </appender>
+    <appender name="test" class="LoggerAppenderRollingFile">
+        <layout class="LoggerLayoutTTCC"/>
+        <param name="file" value="U:/testSolrCon/logs/test/test.log"/>
+        <param name="maxBackupIndex" value="100"/>
+    </appender>
+    <appender name="solr" class="LoggerAppenderRollingFile">
+        <layout class="LoggerLayoutTTCC"/>
+        <param name="file" value="U:/testSolrCon/logs/solr/solr.log"/>
+        <param name="maxBackupIndex" value="100"/>
+    </appender>
+
+
+
+    <logger name="suixin">
+        <level value="debug"/>
+        <appender_ref ref="suixin"/>
+    </logger>
+    <logger name="test">
+        <level value="debug"/>
+        <appender_ref ref="test"/>
+    </logger>
+    <logger name="solr">
+        <level value="debug"/>
+        <appender_ref ref="solr"/>
+    </logger>
+
+
+</configuration>
