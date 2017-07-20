@@ -25,10 +25,16 @@ try {
 }
 
 
-function execute(){
+function execute()
+{
     //查询
 //    getDataFromSolr();
+    //插入
     insert();
+    //修改
+//    updateSolrData();
+    //删除
+//    deleteSolrData();
 }
 
 /**
@@ -48,8 +54,8 @@ function getDataFromSolr()
     if (empty($data)) {
         $logger->info("the data is null.");
         return null;
-    }else{
-        $logger->info("the solr  data is:".var_export($data,true));
+    } else {
+        $logger->info("the solr  data is:" . var_export($data, true));
         print_r($data);
         return $data;
     }
@@ -58,11 +64,12 @@ function getDataFromSolr()
 /**
  *  插入数据
  */
-function insert(){
+function insert()
+{
     global $logger;
     $url = SOLR_URL_UPDATE;
     $q = "type=insert&commit=true";  //commit决定是否刷新到磁盘上
-    $finalUrl = $url."?".$q;
+    $finalUrl = $url . "?" . $q;
 
     //数据
     $sendData = array();
@@ -76,10 +83,54 @@ function insert(){
     $sendData[2]['title'] = "title03_php";
     $sendData[2]['content'] = "content03_php";
 
-    $data = send_solr($sendData,$finalUrl);
-    $logger->info("the data is:".var_export($data,true));
+    $data = send_solr($sendData, $finalUrl);
+    $logger->info("the data is:" . var_export($data, true));
 
 }
 
+/**
+ *  更新数据    //其实solr的insert,update都是一样的。。   都是先检查id师傅存在，不存在则add，存在则update
+ */
+function updateSolrData()
+{
+    global $logger;
+    $url = SOLR_URL_UPDATE;
+    $q = "type=update&commit=true";  //commit决定是否刷新到磁盘上
+    $finalUrl = $url . "?" . $q;
+
+    //数据
+    $sendData = array();
+    $sendData[0]['id'] = "yu01_php";
+    $sendData[0]['title'] = "title01_php";
+    $sendData[0]['content'] = "content01_php";
+    $sendData[1]['id'] = "yu02_php";
+    $sendData[1]['title'] = "title02_php";
+    $sendData[1]['content'] = "content02_php";
+    $sendData[2]['id'] = "yu03_php";
+    $sendData[2]['title'] = "title03_php";
+    $sendData[2]['content'] = "content03_php";
+
+    $data = send_solr($sendData, $finalUrl);
+    $logger->info("the data is:" . var_export($data, true));
+}
+
+/**
+ *  删除solr的数据
+ */
+function deleteSolrData()
+{
+//    {"delete":{"query":"*:*"}}
+    global $logger;
+    $url = SOLR_URL_DELETE;
+    $q = "type=update&commit=true";  //commit决定是否刷新到磁盘上
+    $finalUrl = $url . "?" . $q;
+    $sendData = array();
+    $query['query'] = "*:*";
+
+    $sendData['delete'] = $query;
+    $data = send_solr($sendData, $finalUrl);
+    $logger->info("the data is:" . var_export($data, true));
+
+}
 
 ?>
